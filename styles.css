@@ -917,3 +917,10 @@ body.dark-theme .book-card:hover {
         padding: 5px;
     }
 }
+
+/* Используем динамическую высоту окна */
+.main-content {
+  min-height: 100dvh; /* Поддерживается в современных браузерах */
+  box-sizing: border-box;
+  padding-bottom: env(safe-area-inset-bottom, 16px); /* Для устройств с вырезами/панелями */
+}
