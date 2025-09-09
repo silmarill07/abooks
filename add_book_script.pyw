@@ -191,10 +191,9 @@ class AudioArrayGenerator(Gtk.Window):
     title: "{title_text}",
     cover: "img/{cover_file}",
     audioFiles: [
-Аудио:
-{',\n'.join(array_lines)}
-    ]
-}}"""
+        {',\n'.join(array_lines)}
+            ]
+        }}"""
         self.textbuffer.set_text(output)
 
     def show_error(self, message):

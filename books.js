@@ -33,7 +33,7 @@ const books = [
     },
     {
     id: "novaja",
-    title: "Андрей Круз, Мария Круз - Земля лишних. Новая жизнь",
+    title: "Андрей Круз, Мария Круз - Земля лишних.Новая жизнь",
     cover: "img/новая жизнь.jpg",
     audioFiles: [
         { title: "Глава 1", file: "audio/novaja/02_01.mp3" },
@@ -61,6 +61,31 @@ const books = [
         { title: "Глава 23", file: "audio/novaja/02_23.mp3" },
         { title: "Глава 24", file: "audio/novaja/02_24.mp3" },
         { title: "Глава 25", file: "audio/novaja/02_25.mp3" }
+        ]
+    },
+    {
+    id: "________",
+    title: "Андрей Круз, Мария Круз - Земля лишних.За други своя",
+    cover: "img/за дурги своя.jpg",
+    audioFiles: [
+        { title: "Глава 1", file: "audio/za%20drugi%20svoya/m01.mp3" },
+        { title: "Глава 2", file: "audio/za%20drugi%20svoya/m02.mp3" },
+        { title: "Глава 3", file: "audio/za%20drugi%20svoya/m03.mp3" },
+        { title: "Глава 4", file: "audio/za%20drugi%20svoya/m04.mp3" },
+        { title: "Глава 5", file: "audio/za%20drugi%20svoya/m05.mp3" },
+        { title: "Глава 6", file: "audio/za%20drugi%20svoya/m06.mp3" },
+        { title: "Глава 7", file: "audio/za%20drugi%20svoya/m07.mp3" },
+        { title: "Глава 8", file: "audio/za%20drugi%20svoya/m08.mp3" },
+        { title: "Глава 9", file: "audio/za%20drugi%20svoya/m09.mp3" },
+        { title: "Глава 10", file: "audio/za%20drugi%20svoya/m10.mp3" },
+        { title: "Глава 11", file: "audio/za%20drugi%20svoya/m11.mp3" },
+        { title: "Глава 12", file: "audio/za%20drugi%20svoya/m12.mp3" },
+        { title: "Глава 13", file: "audio/za%20drugi%20svoya/m13.mp3" },
+        { title: "Глава 14", file: "audio/za%20drugi%20svoya/m14.mp3" },
+        { title: "Глава 15", file: "audio/za%20drugi%20svoya/m15.mp3" },
+        { title: "Глава 16", file: "audio/za%20drugi%20svoya/m16.mp3" },
+        { title: "Глава 17", file: "audio/za%20drugi%20svoya/m17.mp3" },
+        { title: "Глава 18", file: "audio/za%20drugi%20svoya/m18.mp3" }
         ]
     }
 ];
