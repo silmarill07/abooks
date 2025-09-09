@@ -1,0 +1,919 @@
+/* styles.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --primary: #4361ee;
+    --primary-dark: #3a56d4;
+    --bg-light: #f8f9fa;
+    --bg-dark: #121212;
+    --card-light: #ffffff;
+    --card-dark: #1e1e1e;
+    --text-light: #212529;
+    --text-dark: #e9ecef;
+    --border-light: #dee2e6;
+    --border-dark: #343a40;
+    --success: #4cc9f0;
+    --shadow-light: rgba(0, 0, 0, 0.08);
+    --shadow-dark: rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+body {
+    background-color: var(--bg-light);
+    color: var(--text-light);
+    transition: background-color 0.3s, color 0.3s;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+    overflow: hidden; /* Запрещаем общий скролл */
+}
+
+body.dark-theme {
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Запрещаем общий скролл */
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border-light);
+    flex-shrink: 0;
+}
+
+body.dark-theme header {
+    border-bottom: 1px solid var(--border-dark);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo i {
+    font-size: 2rem;
+    color: var(--primary);
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.3rem;
+    color: var(--text-light);
+    transition: transform 0.3s;
+}
+
+body.dark-theme .theme-toggle {
+    color: var(--text-dark);
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+}
+
+.home-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--text-light);
+    transition: transform 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+body.dark-theme .home-btn {
+    color: var(--text-dark);
+}
+
+.home-btn:hover {
+    transform: scale(1.1);
+    background-color: rgba(67, 97, 238, 0.1);
+}
+
+/* Основной контент - растягивается на всё свободное пространство */
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* Важно для корректного растягивания */
+    overflow: hidden; /* Запрещаем общий скролл */
+}
+
+.player-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    flex: 1;
+    min-height: 0;
+}
+
+@media (min-width: 768px) {
+    .player-container {
+        flex-direction: row;
+    }
+    
+    header {
+        padding: 20px;
+    }
+    
+    .logo h1 {
+        font-size: 2rem;
+    }
+    
+    .logo i {
+        font-size: 2.5rem;
+    }
+}
+
+.book-cover-large {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    min-height: 200px;
+}
+
+.cover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.7) 100%);
+}
+
+.cover-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    padding: 20px;
+    color: white;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.cover-content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.audio-player {
+    flex: 2;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 10px 30px var(--shadow-light);
+    position: relative;
+    z-index: 10;
+    backdrop-filter: blur(2px);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow-y: auto; /* Добавляем скролл для плеера */
+}
+
+body.dark-theme .audio-player {
+    background-color: rgba(30, 30, 30, 0.3);
+    box-shadow: 0 10px 30px var(--shadow-dark);
+}
+
+.player-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.player-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.speed-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.speed-control label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.speed-input {
+    width: 70px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+    background-color: var(--bg-light);
+    color: var(--text-light);
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+body.dark-theme .speed-input {
+    border: 1px solid var(--border-dark);
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
+}
+
+.progress-container {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.progress-bar {
+    height: 6px;
+    width: 100%;
+    background-color: var(--border-light);
+    border-radius: 3px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+body.dark-theme .progress-bar {
+    background-color: var(--border-dark);
+}
+
+.progress {
+    height: 100%;
+    width: 0%;
+    background-color: var(--primary);
+    border-radius: 3px;
+    transition: width 0.1s linear;
+    position: relative;
+}
+
+.progress-handle {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(50%, -50%);
+    width: 24px;
+    height: 24px;
+    background-color: var(--primary);
+    border-radius: 50%;
+    cursor: grab;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+    transition: transform 0.2s, background-color 0.2s;
+    border: 2px solid white;
+}
+
+.progress-handle:hover {
+    transform: translate(50%, -50%) scale(1.1);
+    background-color: var(--primary-dark);
+}
+
+.progress-handle:active {
+    cursor: grabbing;
+    transform: translate(50%, -50%) scale(1.2);
+}
+
+/* Невидимая область для перетаскивания */
+.progress-handle-drag-area {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(50%, -50%);
+    width: 40px;
+    height: 40px;
+    cursor: grab;
+    z-index: 11;
+    background: transparent;
+}
+
+.progress-handle-drag-area:active {
+    cursor: grabbing;
+}
+
+.time-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* Новое: контейнер для оставшегося времени */
+.remaining-time-container {
+    text-align: center;
+    margin-bottom: 15px;
+    padding: 12px;
+    background: rgba(67, 97, 238, 0.1);
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.remaining-label {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    color: var(--primary);
+}
+
+.remaining-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary);
+    margin-bottom: 5px;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+}
+
+.control-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: var(--text-light);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+body.dark-theme .control-btn {
+    color: var(--text-dark);
+}
+
+.control-btn:hover {
+    background-color: rgba(67, 97, 238, 0.1);
+    color: var(--primary);
+}
+
+.play-btn {
+    width: 60px;
+    height: 60px;
+    font-size: 1.8rem;
+    background-color: var(--primary);
+    color: white;
+}
+
+.play-btn:hover {
+    background-color: var(--primary-dark);
+    transform: scale(1.05);
+}
+
+.rewind-text {
+    font-size: 1rem;
+    display: block;
+    padding: 0 8px 0 8px;
+}
+
+.playlist {
+    margin-top: 15px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.playlist-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-light);
+    flex-shrink: 0;
+}
+
+body.dark-theme .playlist-header {
+    border-bottom: 1px solid var(--border-dark);
+}
+
+.playlist-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.playlist-items {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.playlist-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-right: 5px;
+}
+
+.playlist-item:hover {
+    background-color: rgba(67, 97, 238, 0.3);
+}
+
+.playlist-item.active {
+    background-color: rgba(67, 97, 238, 0.8);
+}
+
+.playlist-item-number {
+    width: 25px;
+    text-align: center;
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+.playlist-item-title {
+    flex: 1;
+    padding: 0 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.9rem;
+}
+
+.playlist-item-time {
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+footer {
+    text-align: center;
+    padding: 15px 20px;
+    opacity: 0.7;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}
+
+/* Скроллбар */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+    border-radius: 3px;
+}
+
+body.dark-theme ::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+}
+
+.loading {
+    text-align: center;
+    padding: 50px;
+    font-size: 1.2rem;
+}
+
+.loading i {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: var(--primary);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Список книг */
+.books-list-container {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.books-list-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.book-card {
+    background: var(--card-light);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px var(--shadow-light);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    height: 300px; /* Фиксированная высота */
+    width: 100%; /* Заполняет всю ширину ячейки */
+}
+
+body.dark-theme .book-card {
+    background: var(--card-dark);
+    box-shadow: 0 4px 12px var(--shadow-dark);
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px var(--shadow-light);
+}
+
+body.dark-theme .book-card:hover {
+    box-shadow: 0 6px 16px var(--shadow-dark);
+}
+
+.book-cover {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0; /* Позволяет сжиматься */
+}
+
+.book-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.book-title {
+    padding: 15px 10px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 0; /* Не сжимается */
+}
+
+/* Адаптация для больших экранов */
+@media (min-width: 1200px) {
+    .books-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 25px;
+    }
+    
+    .book-card {
+        height: 320px;
+    }
+    
+    .progress-handle-drag-area {
+        width: 44px;
+        height: 44px;
+    }
+}
+
+/* Адаптация для средних экранов */
+@media (min-width: 768px) and (max-width: 1199px) {
+    .books-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 20px;
+    }
+    
+    .book-card {
+        height: 280px;
+    }
+    
+    .progress-handle-drag-area {
+        width: 42px;
+        height: 42px;
+    }
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 767px) {
+    .container {
+        height: 100vh;
+        max-width: none;
+        border-radius: 0;
+    }
+    
+    header {
+        padding: 12px 15px;
+    }
+    
+    .logo h1 {
+        font-size: 1.3rem;
+    }
+    
+    .logo i {
+        font-size: 1.8rem;
+    }
+    
+    .theme-toggle {
+        font-size: 1.2rem;
+    }
+    
+    .home-btn {
+        font-size: 1.3rem;
+        width: 35px;
+        height: 35px;
+    }
+    
+    .player-container {
+        flex-direction: column;
+        margin: 0;
+        border-radius: 0;
+        gap: 15px;
+        padding: 15px;
+    }
+    
+    .book-cover-large {
+        min-height: 150px;
+    }
+    
+    .cover-content h2 {
+        font-size: 1.2rem;
+    }
+    
+    .audio-player {
+        padding: 15px;
+        border-radius: 12px;
+        overflow-y: auto; /* Скролл на мобильных */
+    }
+    
+    .player-header {
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 15px;
+        gap: 10px;
+    }
+    
+    .player-title {
+        font-size: 1.1rem;
+        text-align: center;
+    }
+    
+    .speed-control {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .speed-input {
+        width: 60px;
+        padding: 5px 8px;
+        font-size: 0.8rem;
+    }
+    
+    .controls {
+        gap: 12px;
+        margin-bottom: 15px;
+    }
+    
+    .control-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .play-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+    
+    .progress-container {
+        margin-bottom: 15px;
+    }
+    
+    .progress-handle-drag-area {
+        width: 46px;
+        height: 46px;
+    }
+    
+    /* Адаптация для оставшегося времени на мобильных */
+    .remaining-time-container {
+        padding: 10px;
+        margin-bottom: 12px;
+    }
+    
+    .remaining-label {
+        font-size: 0.8rem;
+    }
+    
+    .remaining-value {
+        font-size: 1.3rem;
+    }
+    
+    .playlist {
+        margin-top: 12px;
+    }
+    
+    .playlist-header {
+        margin-bottom: 8px;
+        padding-bottom: 6px;
+    }
+    
+    .playlist-title {
+        font-size: 1rem;
+    }
+    
+    .playlist-item {
+        padding: 8px 10px;
+        margin-bottom: 5px;
+    }
+    
+    .playlist-item-number {
+        width: 22px;
+        font-size: 0.7rem;
+    }
+    
+    .playlist-item-title {
+        font-size: 0.85rem;
+        padding: 0 10px;
+    }
+    
+    .playlist-item-time {
+        font-size: 0.7rem;
+    }
+    
+    footer {
+        padding: 12px 15px;
+        font-size: 0.7rem;
+    }
+    
+    .books-list-container {
+        padding: 15px;
+    }
+    
+    .books-list-container h2 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+    
+    .books-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 15px;
+        padding: 5px;
+    }
+    
+    .book-card {
+        height: 250px; /* Уменьшенная высота для мобильных */
+    }
+    
+    .book-cover {
+        min-height: 160px;
+    }
+    
+    .book-title {
+        padding: 12px 8px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Фикс для мобильных браузеров */
+@media (max-width: 480px) {
+    .audio-player {
+        padding: 12px;
+        overflow-y: auto; /* Скролл на маленьких экранах */
+    }
+    
+    .player-title {
+        font-size: 1rem;
+    }
+    
+    .controls {
+        gap: 10px;
+    }
+    
+    .control-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+    
+    .play-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+    }
+    
+    .progress-handle-drag-area {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .remaining-value {
+        font-size: 1.2rem;
+    }
+    
+    .remaining-label {
+        font-size: 0.75rem;
+    }
+    
+    .playlist-item-number {
+        width: 20px;
+        font-size: 0.65rem;
+    }
+    
+    .playlist-item-title {
+        font-size: 0.8rem;
+    }
+    
+    .playlist-item-time {
+        font-size: 0.65rem;
+    }
+    
+    .home-btn {
+        font-size: 1.2rem;
+        width: 30px;
+        height: 30px;
+    }
+    
+    .books-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 12px;
+    }
+    
+    .book-card {
+        height: 220px; /* Еще меньшая высота для маленьких экранов */
+    }
+    
+    .book-cover {
+        min-height: 140px;
+    }
+    
+    .book-title {
+        padding: 10px 6px;
+        font-size: 0.75rem;
+    }
+
+    h2 {
+        font-size: 1rem;
+    }
+    .progress-container {
+        margin-bottom: 2px;
+    }
+    .remaining-time-container {
+        margin-bottom: 1px;
+        padding: 5px;
+    }
+}
