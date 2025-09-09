@@ -812,3 +812,10 @@ window.addEventListener('beforeunload', () => {
         window.player.saveCurrentProgress();
     }
 });
+
+function setFullHeight() {
+  document.querySelector('.main-content').style.minHeight = window.innerHeight + 'px';
+}
+window.addEventListener('resize', setFullHeight);
+window.addEventListener('orientationchange', setFullHeight);
+setFullHeight();
