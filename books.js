@@ -64,7 +64,7 @@ const books = [
         ]
     },
     {
-    id: "________",
+    id: "za_drugi_svoya",
     title: "Андрей Круз, Мария Круз - Земля лишних.За други своя",
     cover: "img/за дурги своя.jpg",
     audioFiles: [
