@@ -1,2 +1,0 @@
-mkdir -p mp3
-for f in *.awb; do ffmpeg -i "$f" "mp3/${f%.awb}.mp3"; done
