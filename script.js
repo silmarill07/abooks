@@ -189,7 +189,7 @@ id: "ishod",
                     <div class="playlist">
                         <div class="playlist-header">
                             <div class="playlist-title">Список глав</div>
-                            <div class="playlist-stats">${this.book.chapters.length} глав</div>
+                            <div class="playlist-stats">${this.book.chapters.length} шт</div>
                         </div>
                         <div class="playlist-items" id="playlistItems">
                             <!-- Элементы плейлиста будут добавлены сюда -->
