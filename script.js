@@ -466,7 +466,7 @@ class AudioBookPlayer {
                     
                     <div class="playlist">
                         <div class="playlist-header">
-                            <div class="playlist-title">Список глав</div>
+                            <div class="playlist-title">Список файлов</div>
                             <div class="playlist-stats">${this.book.chapters.length} шт</div>
                         </div>
                         <div class="playlist-items" id="playlistItems">
