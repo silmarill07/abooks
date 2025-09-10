@@ -414,11 +414,11 @@ class AudioBookPlayer {
         if (!mainContent) return;
         
         mainContent.innerHTML = `
-            <h2>${this.book.title}</h2>
             <div class="player-container" style="background-image: url('${this.book.cover}');">
                 <div class="cover-overlay"></div>
                 
                 <div class="audio-player">
+                <h2>${this.book.title}</h2>
                     <div class="player-header">
                         <div class="player-title">Сейчас играет: ${this.book.chapters[0].title}</div>
                         <div class="speed-control">

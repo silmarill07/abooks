@@ -907,7 +907,7 @@ body.dark-theme .book-card:hover {
     }
 
     h2 {
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
     .progress-container {
         margin-bottom: 2px;
@@ -915,6 +915,12 @@ body.dark-theme .book-card:hover {
     .remaining-time-container {
         margin-bottom: 1px;
         padding: 5px;
+    }
+    .playlist-item-title {
+        font-size: 15px;
+    }
+    .playlist-item-time {
+        font-size: 15px;
     }
 }
 
