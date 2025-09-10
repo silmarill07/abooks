@@ -353,15 +353,16 @@ body.dark-theme .progress-bar {
 }
 
 .remaining-label {
-    font-size: 0.9rem;
+    font-size: 1.5rem;
     margin-bottom: 5px;
-    color: var(--primary);
+    padding-right: 5px;
+    color: var(--bg-ligh);
 }
 
 .remaining-value {
     font-size: 1.5rem;
     font-weight: bold;
-    color: var(--primary);
+    color: var(--bg-ligh);
     margin-bottom: 5px;
 }
 
