@@ -370,6 +370,17 @@ class AudioBookPlayer {
                 <label for="speedInput">Швидкість:</label>
                 <input type="number" id="speedInput" class="speed-input" min="0.1" max="3" step="0.01" value="1.00">
             </div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar">
+                    <div class="progress" id="progress">
+                        <div class="progress-handle" id="progressHandle"></div>
+                    </div>
+                </div>
+                <div class="time-info">
+                    <span id="currentTime">00:00</span>
+                    <span id="duration">00:00</span>
+                </div>
+            </div>
             <div class="controls">
                 <button class="control-btn" id="rewindBack" title="Назад на 10 сек"><i class="fa fa-fast-backward" aria-hidden="true"></i></i></button>
                 <button class="control-btn" id="prevBtn" title="Попередній файл"><i class="fas fa-step-backward"></i></button>
