@@ -1052,7 +1052,7 @@ main {
     }
 }
 
-@media (min-width: 399px) and (max-width: 480px) {
+@media (min-width: 320px) and (max-width: 480px) {
      .playlist {
         top: 390px;
     }
