@@ -1048,12 +1048,12 @@ main {
 
 @media (min-width: 481px) and (max-width: 767px) {
     .playlist {
-        top: 440px;
+        top: 470px;
     }
 }
 
 @media (min-width: 399px) and (max-width: 480px) {
      .playlist {
-        top: 335px;
+        top: 390px;
     }
 }
