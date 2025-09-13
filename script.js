@@ -357,101 +357,148 @@ class AudioBookPlayer {
     }
 
     showBook() {
-        const mainContent = document.getElementById('mainContent');
-        if (!mainContent) return;
-        
-        mainContent.innerHTML = `
-            <div class="player-container" style="background-image: url('${this.book.cover}');">
-                <div class="cover-overlay"></div>
-                
-                <div class="audio-player">
-                <h2>${this.book.title}</h2>
-                    <div class="player-header">
-                        <div class="player-title">Сейчас играет: ${this.book.chapters[0].title}</div>
-                        <div class="speed-control">
-                            <label for="speedInput">Скорость:</label>
-                            <input type="number" id="speedInput" class="speed-input" min="0.1" max="3" step="0.01" value="1.00" placeholder="1.00">
-                        </div>
-                    </div>
-                    
-                    <div class="progress-container">
-                        <div class="progress-bar" id="progressBar">
-                            <div class="progress" id="progress">
-                                <div class="progress-handle" id="progressHandle"></div>
-                            </div>
-                        </div>
-                        <div class="time-info">
-                            <span id="currentTime">00:00</span>
-                            <span id="duration">00:00</span>
-                        </div>
-                    </div>
-                    
-                    <div class="controls">
-                        <button class="control-btn" id="rewindBack" title="Назад на 10 сек">
-                            <i class="fas fa-backward"></i>
-                            <span class="rewind-text">10с</span>
-                        </button>
-                        <button class="control-btn" id="prevBtn" title="Предыдущая глава">
-                            <i class="fas fa-step-backward"></i>
-                        </button>
-                        <button class="control-btn play-btn" id="playBtn">
-                            <i class="fas fa-play"></i>
-                        </button>
-                        <button class="control-btn" id="nextBtn" title="Следующая глава">
-                            <i class="fas fa-step-forward"></i>
-                        </button>
-                        <button class="control-btn" id="rewindForward" title="Вперед на 10 сек">
-                            <span class="rewind-text">10с</span>
-                            <i class="fas fa-forward"></i>
-                        </button>
-                    </div>
+    const mainContent = document.getElementById('mainContent');
+    if (!mainContent) return;
 
-                    <div class="remaining-time-container">
-                        <div class="remaining-label">Осталось:</div>
-                        <div class="remaining-value" id="remainingTime">--:--</div>
-                    </div>
-                    
-                    <div class="playlist">
-                        <div class="playlist-header">
-                            <div class="playlist-title">Список файлов</div>
-                            <div class="playlist-stats">${this.book.chapters.length} шт</div>
-                        </div>
-                        <div class="playlist-items" id="playlistItems">
-                            <!-- Элементы плейлиста будут добавлены сюда -->
-                        </div>
-                    </div>
-                </div>
+    mainContent.innerHTML = `
+    <div class="player-bg" style="background-image:url('${this.book.cover}');">
+        <div class="bg-blur" style="background-image:url('${this.book.cover}');"></div>
+        <div id="playerBlock" class="audio-player centered">
+            <h2>${this.book.title}</h2>
+            <div class="player-title">${this.book.chapters[0].title}</div>
+            <div class="speed-row">
+                <label for="speedInput">Швидкість:</label>
+                <input type="number" id="speedInput" class="speed-input" min="0.1" max="3" step="0.01" value="1.00">
             </div>
+            <div class="controls">
+                <button class="control-btn" id="rewindBack" title="Назад на 10 сек"><i class="fa fa-fast-backward" aria-hidden="true"></i></i></button>
+                <button class="control-btn" id="prevBtn" title="Попередній файл"><i class="fas fa-step-backward"></i></button>
+                <button class="control-btn play-btn" id="playBtn"><i class="fas fa-play"></i></button>
+                <button class="control-btn" id="nextBtn" title="Наступний файл"><i class="fas fa-step-forward"></i></button>
+                <button class="control-btn" id="rewindForward" title="Вперед на 10 сек"><i class="fa fa-fast-forward" aria-hidden="true"></i></i></button>
+            </div>
+            <div class="remaining-time-container">
+                <span class="remaining-label">Залишилось:</span>
+                <span class="remaining-value" id="remainingTime">--:--</span>
+            </div>
+            <div class="playlist-toggle-row">
+                <button id="togglePlaylistBtn" class="playlist-toggle-btn-blur" title="Показати список файлів">
+                    <i class="fas fa-list"></i>
+                    <span class="playlist-toggle-text">Список файлів</span>
+                </button>
+            </div>
+        </div>
+        <div class="playlist" id="playlistPanel">
+            <div class="playlist-items" id="playlistItems"></div>
+        </div>
+    </div>
+`;
+
+    this.updateHeaderForPlayer();
+    this.renderPlaylist();
+    this.loadChapterWithSavedProgress();
+
+    setTimeout(() => {
+        this.setupPlaylistToggle();
+        this.setupProgressBarEvents();
+    }, 100);
+}
+
+setupPlaylistToggle() {
+    const panel = document.getElementById('playlistPanel');
+    const playerBlock = document.getElementById('playerBlock');
+    const toggleBtn = document.getElementById('togglePlaylistBtn');
+    
+    if (!panel || !playerBlock || !toggleBtn) return;
+    
+    let isPlaylistVisible = false;
+    
+    toggleBtn.addEventListener('click', () => {
+        if (!isPlaylistVisible) {
+            // Показываем плейлист
+            toggleBtn.classList.add('active');
+            
+            // Сначала плавно поднимаем блок управления
+            playerBlock.classList.add('playerBlock--topmost');
+            
+            // Ждем завершения анимации блока управления, затем показываем плейлист
+            setTimeout(() => {
+                // Динамически задаём top для списка после подъема блока
+                const rect = playerBlock.getBoundingClientRect();
+                panel.style.top = rect.height + 20 + 'px'; // +20px для отступа
+                panel.style.maxHeight = `calc(100vh - ${rect.height + 20}px)`;
+                
+                // Показываем плейлист
+                panel.classList.add('show');
+            }, 200); // Половина времени анимации блока управления
+            
+            isPlaylistVisible = true;
+        } else {
+            // Скрываем плейлист
+            panel.classList.remove('show');
+            toggleBtn.classList.remove('active');
+            
+            // Ждем окончания анимации скрытия плейлиста, затем опускаем блок
+            setTimeout(() => {
+                playerBlock.classList.remove('playerBlock--topmost');
+                panel.style.top = '';
+                panel.style.maxHeight = '';
+            }, 300); // Время анимации плейлиста
+            
+            isPlaylistVisible = false;
+        }
+    });
+
+        document.addEventListener('click', (e) => {
+        if (isPlaylistVisible && 
+            !panel.contains(e.target) && 
+            !toggleBtn.contains(e.target) &&
+            !playerBlock.contains(e.target)) {
+            
+            panel.classList.remove('show');
+            toggleBtn.classList.remove('active');
+            
+            setTimeout(() => {
+                playerBlock.classList.remove('playerBlock--topmost');
+                panel.style.top = '';
+                panel.style.maxHeight = '';
+            }, 300);
+            
+            isPlaylistVisible = false;
+        }
+    });
+}
+
+renderPlaylist() {
+    const playlistItems = document.getElementById('playlistItems');
+    if (!playlistItems) return;
+
+    playlistItems.innerHTML = '';
+
+    this.book.chapters.forEach((chapter, index) => {
+        const item = document.createElement('div');
+        item.className = `playlist-item${index === this.currentChapterIndex ? ' active' : ''}`;
+        item.innerHTML = `
+            <div class="playlist-item-left">
+                <span class="playlist-item-number">${index + 1}</span>
+                <span class="playlist-item-title">${chapter.title}</span>
+            </div>
+            <span class="playlist-item-time">${chapter.duration ? this.formatTime(chapter.duration) : '00:00'}</span>
         `;
         
-        // Обновляем хедер для плеера
-        this.updateHeaderForPlayer();
-        
-        this.renderPlaylist();
-        this.loadChapterWithSavedProgress();
-        
-        // Устанавливаем обработчики прогресс бара после рендеринга
-        setTimeout(() => this.setupProgressBarEvents(), 100);
-    }
-
-    renderPlaylist() {
-        const playlistItems = document.getElementById('playlistItems');
-        if (!playlistItems) return;
-        
-        playlistItems.innerHTML = '';
-        
-        this.book.chapters.forEach((chapter, index) => {
-            const item = document.createElement('div');
-            item.className = `playlist-item ${index === this.currentChapterIndex ? 'active' : ''}`;
-            item.innerHTML = `
-                <div class="playlist-item-number">${index + 1}</div>
-                <div class="playlist-item-title">${chapter.title}</div>
-                <div class="playlist-item-time">${chapter.duration ? this.formatTime(chapter.duration) : '00:00'}</div>
-            `;
-            item.addEventListener('click', () => this.loadChapter(index));
-            playlistItems.appendChild(item);
+        // Добавляем обработчик клика с небольшой задержкой для лучшего UX
+        item.addEventListener('click', () => {
+            // Добавляем визуальный отклик
+            item.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                item.style.transform = '';
+                this.loadChapter(index);
+            }, 100);
         });
-    }
+        
+        playlistItems.appendChild(item);
+    });
+}
 
     // Загрузка главы с восстановлением сохраненного прогресса
     loadChapterWithSavedProgress() {
@@ -516,7 +563,7 @@ class AudioBookPlayer {
             }
         });
         
-        document.querySelector('.player-title').textContent = `Сейчас играет: ${chapter.title}`;
+        document.querySelector('.player-title').textContent = `Зараз грає: ${chapter.title}`;
         
         // Если длительность уже загружена, обновляем отображение
         if (chapter.duration) {
@@ -527,24 +574,23 @@ class AudioBookPlayer {
         this.updateRemainingTime();
     }
 
-    loadChapter(index) {
-        // Сохраняем прогресс текущей главы
+loadChapter(index) {
         this.saveCurrentProgress();
-        
+
         this.currentChapterIndex = index;
         const chapter = this.book.chapters[index];
-        
+
         // Сохраняем текущую скорость перед загрузкой новой главы
         const currentSpeed = this.audio.playbackRate;
-        
+
         // Загружаем новую главу
         this.audio.src = chapter.file;
         this.audio.load();
-        this.audio.currentTime = 0; // Начинаем с начала новой главы
-        
+        this.audio.currentTime = 0;
+
         // Восстанавливаем скорость после загрузки новой главы
         this.audio.playbackRate = currentSpeed;
-        
+
         // Обновляем UI
         document.querySelectorAll('.playlist-item').forEach((item, i) => {
             if (i === index) {
@@ -553,20 +599,20 @@ class AudioBookPlayer {
                 item.classList.remove('active');
             }
         });
-        
-        document.querySelector('.player-title').textContent = `Сейчас играет: ${chapter.title}`;
-        
-        // Если длительность уже загружена, обновляем отображение
-        if (chapter.duration) {
-            document.getElementById('duration').textContent = this.formatTime(chapter.duration);
-        } else {
-            document.getElementById('duration').textContent = '00:00';
+
+        // Проверяем, существует ли элемент перед изменением
+        const playerTitleEl = document.querySelector('.player-title');
+        if (playerTitleEl) {
+            playerTitleEl.textContent = `Зараз грає: ${chapter.title}`;
         }
-        
-        // Обновляем оставшееся время
+
+        const durationEl = document.getElementById('duration');
+        if (durationEl) {
+            durationEl.textContent = chapter.duration ? this.formatTime(chapter.duration) : '00:00';
+        }
+
         this.updateRemainingTime();
-        
-        // Если воспроизводилось, продолжаем воспроизведение
+
         if (this.isPlaying) {
             this.audio.play();
         }
@@ -761,7 +807,10 @@ window.addEventListener('beforeunload', () => {
 });
 
 function setFullHeight() {
-  document.querySelector('.main-content').style.minHeight = window.innerHeight + 'px';
+  const el = document.querySelector('.main-content');
+  if (el) {
+    el.style.minHeight = window.innerHeight + 'px';
+  }
 }
 window.addEventListener('resize', setFullHeight);
 window.addEventListener('orientationchange', setFullHeight);
