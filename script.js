@@ -356,49 +356,54 @@ class AudioBookPlayer {
         }
     }
 
-    showBook() {
+showBook() {
     const mainContent = document.getElementById('mainContent');
     if (!mainContent) return;
 
     mainContent.innerHTML = `
     <div class="player-bg" style="background-image:url('${this.book.cover}');">
         <div class="bg-blur" style="background-image:url('${this.book.cover}');"></div>
-        <div id="playerBlock" class="audio-player centered">
-            <h2>${this.book.title}</h2>
-            <div class="player-title">${this.book.chapters[0].title}</div>
-            <div class="speed-row">
-                <label for="speedInput">Швидкість:</label>
-                <input type="number" id="speedInput" class="speed-input" min="0.1" max="3" step="0.01" value="1.00">
-            </div>
-            <div class="progress-container">
-                <div class="progress-bar" id="progressBar">
-                    <div class="progress" id="progress">
-                        <div class="progress-handle" id="progressHandle"></div>
+        
+        <!-- Основной контейнер для анимации -->
+        <div id="playerControls" class="player-controls-container">
+            <div id="playerBlock" class="audio-player centered">
+                <h2>${this.book.title}</h2>
+                <div class="player-title">${this.book.chapters[0].title}</div>
+                <div class="speed-row">
+                    <label for="speedInput">Швидкість:</label>
+                    <input type="number" id="speedInput" class="speed-input" min="0.1" max="3" step="0.01" value="1.00">
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar">
+                        <div class="progress" id="progress">
+                            <div class="progress-handle" id="progressHandle"></div>
+                        </div>
+                    </div>
+                    <div class="time-info">
+                        <span id="currentTime">00:00</span>
+                        <span id="duration">00:00</span>
                     </div>
                 </div>
-                <div class="time-info">
-                    <span id="currentTime">00:00</span>
-                    <span id="duration">00:00</span>
+                <div class="controls">
+                    <button class="control-btn" id="rewindBack" title="Назад на 10 сек"><i class="fa fa-fast-backward" aria-hidden="true"></i></button>
+                    <button class="control-btn" id="prevBtn" title="Попередній файл"><i class="fas fa-step-backward"></i></button>
+                    <button class="control-btn play-btn" id="playBtn"><i class="fas fa-play"></i></button>
+                    <button class="control-btn" id="nextBtn" title="Наступний файл"><i class="fas fa-step-forward"></i></button>
+                    <button class="control-btn" id="rewindForward" title="Вперед на 10 сек"><i class="fa fa-fast-forward" aria-hidden="true"></i></button>
+                </div>
+                <div class="remaining-time-container">
+                    <span class="remaining-label">Залишилось:</span>
+                    <span class="remaining-value" id="remainingTime">--:--</span>
+                </div>
+                <div class="playlist-toggle-row">
+                    <button id="togglePlaylistBtn" class="playlist-toggle-btn-blur" title="Показати список файлів">
+                        <i class="fas fa-list"></i>
+                        <span class="playlist-toggle-text">Список файлів</span>
+                    </button>
                 </div>
             </div>
-            <div class="controls">
-                <button class="control-btn" id="rewindBack" title="Назад на 10 сек"><i class="fa fa-fast-backward" aria-hidden="true"></i></i></button>
-                <button class="control-btn" id="prevBtn" title="Попередній файл"><i class="fas fa-step-backward"></i></button>
-                <button class="control-btn play-btn" id="playBtn"><i class="fas fa-play"></i></button>
-                <button class="control-btn" id="nextBtn" title="Наступний файл"><i class="fas fa-step-forward"></i></button>
-                <button class="control-btn" id="rewindForward" title="Вперед на 10 сек"><i class="fa fa-fast-forward" aria-hidden="true"></i></i></button>
-            </div>
-            <div class="remaining-time-container">
-                <span class="remaining-label">Залишилось:</span>
-                <span class="remaining-value" id="remainingTime">--:--</span>
-            </div>
-            <div class="playlist-toggle-row">
-                <button id="togglePlaylistBtn" class="playlist-toggle-btn-blur" title="Показати список файлів">
-                    <i class="fas fa-list"></i>
-                    <span class="playlist-toggle-text">Список файлів</span>
-                </button>
-            </div>
         </div>
+        
         <div class="playlist" id="playlistPanel">
             <div class="playlist-items" id="playlistItems"></div>
         </div>
@@ -415,12 +420,13 @@ class AudioBookPlayer {
     }, 100);
 }
 
+// Упрощенный метод setupPlaylistToggle():
 setupPlaylistToggle() {
     const panel = document.getElementById('playlistPanel');
-    const playerBlock = document.getElementById('playerBlock');
+    const controlsContainer = document.getElementById('playerControls');
     const toggleBtn = document.getElementById('togglePlaylistBtn');
     
-    if (!panel || !playerBlock || !toggleBtn) return;
+    if (!panel || !controlsContainer || !toggleBtn) return;
     
     let isPlaylistVisible = false;
     
@@ -428,20 +434,12 @@ setupPlaylistToggle() {
         if (!isPlaylistVisible) {
             // Показываем плейлист
             toggleBtn.classList.add('active');
+            controlsContainer.classList.add('controls-top');
             
-            // Сначала плавно поднимаем блок управления
-            playerBlock.classList.add('playerBlock--topmost');
-            
-            // Ждем завершения анимации блока управления, затем показываем плейлист
+            // Показываем плейлист после перемещения контролов
             setTimeout(() => {
-                // Динамически задаём top для списка после подъема блока
-                const rect = playerBlock.getBoundingClientRect();
-                panel.style.top = rect.height + 20 + 'px'; // +20px для отступа
-                panel.style.maxHeight = `calc(100vh - ${rect.height + 20}px)`;
-                
-                // Показываем плейлист
                 panel.classList.add('show');
-            }, 200); // Половина времени анимации блока управления
+            }, 200);
             
             isPlaylistVisible = true;
         } else {
@@ -449,30 +447,27 @@ setupPlaylistToggle() {
             panel.classList.remove('show');
             toggleBtn.classList.remove('active');
             
-            // Ждем окончания анимации скрытия плейлиста, затем опускаем блок
+            // Возвращаем контролы в центр после скрытия плейлиста
             setTimeout(() => {
-                playerBlock.classList.remove('playerBlock--topmost');
-                panel.style.top = '';
-                panel.style.maxHeight = '';
-            }, 300); // Время анимации плейлиста
+                controlsContainer.classList.remove('controls-top');
+            }, 300);
             
             isPlaylistVisible = false;
         }
     });
 
-        document.addEventListener('click', (e) => {
+    // Закрытие при клике вне области
+    document.addEventListener('click', (e) => {
         if (isPlaylistVisible && 
             !panel.contains(e.target) && 
             !toggleBtn.contains(e.target) &&
-            !playerBlock.contains(e.target)) {
+            !controlsContainer.contains(e.target)) {
             
             panel.classList.remove('show');
             toggleBtn.classList.remove('active');
             
             setTimeout(() => {
-                playerBlock.classList.remove('playerBlock--topmost');
-                panel.style.top = '';
-                panel.style.maxHeight = '';
+                controlsContainer.classList.remove('controls-top');
             }, 300);
             
             isPlaylistVisible = false;
