@@ -13,16 +13,10 @@ class AudioBookPlayer {
 
     init() {
         this.setupEventListeners();
-        this.loadTheme();
         this.loadBook();
     }
 
     setupEventListeners() {
-        // Тема
-        if (document.getElementById('themeToggle')) {
-            document.getElementById('themeToggle').addEventListener('click', () => this.toggleTheme());
-        }
-        
         // Аудио события
         this.audio.addEventListener('loadedmetadata', () => this.updateDuration());
         this.audio.addEventListener('timeupdate', () => this.updateProgress());
@@ -140,36 +134,6 @@ class AudioBookPlayer {
         }
     }
 
-    loadTheme() {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            document.body.classList.add('dark-theme');
-            if (document.querySelector('.theme-toggle i')) {
-                document.querySelector('.theme-toggle i').classList.remove('fa-moon');
-                document.querySelector('.theme-toggle i').classList.add('fa-sun');
-            }
-        }
-    }
-
-    toggleTheme() {
-        document.body.classList.toggle('dark-theme');
-        const themeIcon = document.querySelector('.theme-toggle i');
-        
-        if (document.body.classList.contains('dark-theme')) {
-            if (themeIcon) {
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-            }
-            localStorage.setItem('theme', 'dark');
-        } else {
-            if (themeIcon) {
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
-            }
-            localStorage.setItem('theme', 'light');
-        }
-    }
-
     // Загрузка книги
     async loadBook() {
         const mainContent = document.getElementById('mainContent');
@@ -230,7 +194,6 @@ class AudioBookPlayer {
         
         mainContent.innerHTML = `
             <div class="books-list-container">
-                <h2>Аудиокниги</h2>
                 <div class="books-grid">
                     ${booksHTML}
                 </div>
@@ -264,15 +227,7 @@ class AudioBookPlayer {
                     <i class="fas fa-book-reader"></i>
                     <h1>Аудиокниги</h1>
                 </div>
-                <button class="theme-toggle" id="themeToggle">
-                    <i class="fas fa-moon"></i>
-                </button>
             `;
-            
-            // Переназначаем обработчик темы
-            if (document.getElementById('themeToggle')) {
-                document.getElementById('themeToggle').addEventListener('click', () => this.toggleTheme());
-            }
         }
     }
 
@@ -288,15 +243,7 @@ class AudioBookPlayer {
                     <i class="fas fa-book-reader"></i>
                     <h1>Аудиокниги</h1>
                 </div>
-                <button class="theme-toggle" id="themeToggle">
-                    <i class="fas fa-moon"></i>
-                </button>
             `;
-            
-            // Переназначаем обработчики
-            if (document.getElementById('themeToggle')) {
-                document.getElementById('themeToggle').addEventListener('click', () => this.toggleTheme());
-            }
             if (document.getElementById('homeBtn')) {
                 document.getElementById('homeBtn').addEventListener('click', () => this.showBookList());
             }

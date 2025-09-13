@@ -9,16 +9,11 @@
 :root {
     --primary: #4361ee;
     --primary-dark: #3a56d4;
-    --bg-light: #f8f9fa;
     --bg-dark: #121212;
-    --card-light: #ffffff;
     --card-dark: #1e1e1e;
-    --text-light: #212529;
     --text-dark: #e9ecef;
-    --border-light: #dee2e6;
     --border-dark: #343a40;
     --success: #4cc9f0;
-    --shadow-light: rgba(0, 0, 0, 0.08);
     --shadow-dark: rgba(0, 0, 0, 0.3);
 }
 
@@ -30,18 +25,13 @@ h2 {
 }
 
 body {
-    background-color: var(--bg-light);
-    color: var(--text-light);
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
     transition: background-color 0.3s, color 0.3s;
     min-height: 100vh;
     padding: 0;
     margin: 0;
-    overflow: hidden; /* Запрещаем общий скролл */
-}
-
-body.dark-theme {
-    background-color: var(--bg-dark);
-    color: var(--text-dark);
+    overflow: hidden;
 }
 
 .container {
@@ -50,7 +40,7 @@ body.dark-theme {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Запрещаем общий скролл */
+    overflow: hidden;
 }
 
 header {
@@ -58,18 +48,15 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
-    border-bottom: 1px solid var(--border-light);
-    flex-shrink: 0;
-}
-
-body.dark-theme header {
     border-bottom: 1px solid var(--border-dark);
+    flex-shrink: 0;
 }
 
 .logo {
     display: flex;
     align-items: center;
     gap: 15px;
+    margin: 0 auto;
 }
 
 .logo i {
@@ -87,12 +74,8 @@ body.dark-theme header {
     border: none;
     cursor: pointer;
     font-size: 1.3rem;
-    color: var(--text-light);
-    transition: transform 0.3s;
-}
-
-body.dark-theme .theme-toggle {
     color: var(--text-dark);
+    transition: transform 0.3s;
 }
 
 .theme-toggle:hover {
@@ -104,7 +87,7 @@ body.dark-theme .theme-toggle {
     border: none;
     cursor: pointer;
     font-size: 1.5rem;
-    color: var(--text-light);
+    color: var(--text-dark);
     transition: transform 0.3s;
     display: flex;
     align-items: center;
@@ -114,22 +97,17 @@ body.dark-theme .theme-toggle {
     border-radius: 50%;
 }
 
-body.dark-theme .home-btn {
-    color: var(--text-dark);
-}
-
 .home-btn:hover {
     transform: scale(1.1);
     background-color: rgba(67, 97, 238, 0.1);
 }
 
-/* Основной контент - растягивается на всё свободное пространство */
 main {
     flex: 1;
     display: flex;
     flex-direction: column;
-    min-height: 0; /* Важно для корректного растягивания */
-    overflow: hidden; /* Запрещаем общий скролл */
+    min-height: 0;
+    overflow: hidden;
 }
 
 .player-container {
@@ -203,22 +181,17 @@ main {
 
 .audio-player {
     flex: 2;
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(30, 30, 30, 0.3);
     border-radius: 15px;
     padding: 20px;
-    box-shadow: 0 10px 30px var(--shadow-light);
+    box-shadow: 0 10px 30px var(--shadow-dark);
     position: relative;
     z-index: 10;
     backdrop-filter: blur(2px);
     display: flex;
     flex-direction: column;
     min-height: 0;
-    overflow-y: auto; /* Добавляем скролл для плеера */
-}
-
-body.dark-theme .audio-player {
-    background-color: rgba(30, 30, 30, 0.3);
-    box-shadow: 0 10px 30px var(--shadow-dark);
+    overflow-y: auto;
 }
 
 .player-header {
@@ -250,17 +223,11 @@ body.dark-theme .audio-player {
     width: 70px;
     padding: 6px 10px;
     border-radius: 8px;
-    border: 1px solid var(--border-light);
-    background-color: var(--bg-light);
-    color: var(--text-light);
+    border: 1px solid var(--border-dark);
+    background-color: var(--shadow-dark);
+    color: var(--text-dark);
     text-align: center;
     font-size: 0.9rem;
-}
-
-body.dark-theme .speed-input {
-    border: 1px solid var(--border-dark);
-    background-color: var(--bg-dark);
-    color: var(--text-dark);
 }
 
 .progress-container {
@@ -271,15 +238,11 @@ body.dark-theme .speed-input {
 .progress-bar {
     height: 6px;
     width: 100%;
-    background-color: var(--border-light);
+    background-color: var(--border-dark);
     border-radius: 3px;
     cursor: pointer;
     margin-bottom: 10px;
     position: relative;
-}
-
-body.dark-theme .progress-bar {
-    background-color: var(--border-dark);
 }
 
 .progress {
@@ -317,7 +280,6 @@ body.dark-theme .progress-bar {
     transform: translate(50%, -50%) scale(1.2);
 }
 
-/* Невидимая область для перетаскивания */
 .progress-handle-drag-area {
     position: absolute;
     right: 0;
@@ -341,7 +303,6 @@ body.dark-theme .progress-bar {
     opacity: 0.8;
 }
 
-/* Новое: контейнер для оставшегося времени */
 .remaining-time-container {
     text-align: center;
     margin-bottom: 15px;
@@ -350,19 +311,19 @@ body.dark-theme .progress-bar {
     flex-shrink: 0;
     display: flex;
     margin: 0 auto;
+    color: var(--text-dark);
+
 }
 
 .remaining-label {
     font-size: 1.5rem;
     margin-bottom: 5px;
     padding-right: 5px;
-    color: var(--bg-ligh);
 }
 
 .remaining-value {
     font-size: 1.5rem;
     font-weight: bold;
-    color: var(--bg-ligh);
     margin-bottom: 5px;
 }
 
@@ -381,7 +342,7 @@ body.dark-theme .progress-bar {
     border: none;
     cursor: pointer;
     font-size: 1.1rem;
-    color: var(--text-light);
+    color: var(--text-dark);
     width: 45px;
     height: 45px;
     border-radius: 50%;
@@ -390,10 +351,6 @@ body.dark-theme .progress-bar {
     justify-content: center;
     transition: all 0.2s;
     flex-shrink: 0;
-}
-
-body.dark-theme .control-btn {
-    color: var(--text-dark);
 }
 
 .control-btn:hover {
@@ -434,12 +391,8 @@ body.dark-theme .control-btn {
     align-items: center;
     margin-bottom: 10px;
     padding-bottom: 8px;
-    border-bottom: 1px solid var(--border-light);
-    flex-shrink: 0;
-}
-
-body.dark-theme .playlist-header {
     border-bottom: 1px solid var(--border-dark);
+    flex-shrink: 0;
 }
 
 .playlist-title {
@@ -515,10 +468,6 @@ footer {
     border-radius: 3px;
 }
 
-body.dark-theme ::-webkit-scrollbar-thumb {
-    background-color: var(--primary);
-}
-
 .loading {
     text-align: center;
     padding: 50px;
@@ -564,29 +513,20 @@ body.dark-theme ::-webkit-scrollbar-thumb {
 }
 
 .book-card {
-    background: var(--card-light);
+    background: var(--card-dark);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 12px var(--shadow-light);
+    box-shadow: 0 4px 12px var(--shadow-dark);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    height: 300px; /* Фиксированная высота */
-    width: 100%; /* Заполняет всю ширину ячейки */
-}
-
-body.dark-theme .book-card {
-    background: var(--card-dark);
-    box-shadow: 0 4px 12px var(--shadow-dark);
+    height: 300px;
+    width: 100%;
 }
 
 .book-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 16px var(--shadow-light);
-}
-
-body.dark-theme .book-card:hover {
     box-shadow: 0 6px 16px var(--shadow-dark);
 }
 
@@ -595,7 +535,7 @@ body.dark-theme .book-card:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 0; /* Позволяет сжиматься */
+    min-height: 0;
 }
 
 .book-cover img {
@@ -613,10 +553,9 @@ body.dark-theme .book-card:hover {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    flex-shrink: 0; /* Не сжимается */
+    flex-shrink: 0;
 }
 
-/* Адаптация для больших экранов */
 @media (min-width: 1200px) {
     .books-grid {
         grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -633,7 +572,6 @@ body.dark-theme .book-card:hover {
     }
 }
 
-/* Адаптация для средних экранов */
 @media (min-width: 768px) and (max-width: 1199px) {
     .books-grid {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -650,7 +588,6 @@ body.dark-theme .book-card:hover {
     }
 }
 
-/* Адаптация для мобильных устройств */
 @media (max-width: 767px) {
     .container {
         height: 100vh;
@@ -699,7 +636,7 @@ body.dark-theme .book-card:hover {
     .audio-player {
         padding: 15px;
         border-radius: 12px;
-        overflow-y: auto; /* Скролл на мобильных */
+        overflow-y: auto;
     }
     
     .player-header {
@@ -751,7 +688,6 @@ body.dark-theme .book-card:hover {
         height: 46px;
     }
     
-    /* Адаптация для оставшегося времени на мобильных */
     .remaining-time-container {
         padding: 10px;
         margin-bottom: 12px;
@@ -818,7 +754,7 @@ body.dark-theme .book-card:hover {
     }
     
     .book-card {
-        height: 250px; /* Уменьшенная высота для мобильных */
+        height: 250px;
     }
     
     .book-cover {
@@ -831,11 +767,10 @@ body.dark-theme .book-card:hover {
     }
 }
 
-/* Фикс для мобильных браузеров */
 @media (max-width: 480px) {
     .audio-player {
         padding: 12px;
-        overflow-y: auto; /* Скролл на маленьких экранах */
+        overflow-y: auto;
     }
     
     .player-title {
@@ -864,11 +799,11 @@ body.dark-theme .book-card:hover {
     }
     
     .remaining-value {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
     
     .remaining-label {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
     
     .playlist-item-number {
@@ -896,7 +831,7 @@ body.dark-theme .book-card:hover {
     }
     
     .book-card {
-        height: 220px; /* Еще меньшая высота для маленьких экранов */
+        height: 220px;
     }
     
     .book-cover {
@@ -929,7 +864,7 @@ body.dark-theme .book-card:hover {
 
 /* Используем динамическую высоту окна */
 .main-content {
-  min-height: 100dvh; /* Поддерживается в современных браузерах */
+  min-height: 100dvh;
   box-sizing: border-box;
-  padding-bottom: env(safe-area-inset-bottom, 16px); /* Для устройств с вырезами/панелями */
+  padding-bottom: env(safe-area-inset-bottom, 16px);
 }
