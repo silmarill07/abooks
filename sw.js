@@ -45,7 +45,10 @@ self.addEventListener('fetch', (event) => {
     url.protocol === 'blob:' || 
     url.pathname.includes('ws') ||
     url.pathname.includes('vite') ||
-    url.pathname.includes('hmr')
+    url.pathname.includes('hmr') ||
+    // Пропускаем аудиофайлы, так как SW не поддерживает Range-запросы для них
+    // и они не входят в список кэшируемых ресурсов
+    url.pathname.match(/\.(mp3|m4a|wav|ogg|aac|mp4)$/i)
   ) {
     return;
   }
