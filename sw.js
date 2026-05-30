@@ -1,9 +1,8 @@
-const CACHE_NAME = 'abooks-cache-v2';
+const CACHE_NAME = 'abooks-cache-v4';
 const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/src/main.tsx',
-  '/src/index.css'
+  './',
+  'index.html',
+  'abook_logo.png'
 ];
 
 self.addEventListener('install', (event) => {
@@ -11,7 +10,7 @@ self.addEventListener('install', (event) => {
     caches.open(CACHE_NAME).then((cache) => {
       console.log('[Service Worker] Pre-caching offline assets');
       return cache.addAll(ASSETS_TO_CACHE).catch(e => {
-        console.warn('[Service Worker] Some pre-cache assets failed to load:', e);
+        console.error('[Service Worker] Pre-cache failed:', e);
       });
     })
   );
@@ -45,7 +44,8 @@ self.addEventListener('fetch', (event) => {
     url.protocol.startsWith('chrome-extension') || 
     url.protocol === 'blob:' || 
     url.pathname.includes('ws') ||
-    url.hostname === 'localhost' && url.port === '3000' && url.pathname.includes('vite')
+    url.pathname.includes('vite') ||
+    url.pathname.includes('hmr')
   ) {
     return;
   }
@@ -75,8 +75,9 @@ self.addEventListener('fetch', (event) => {
             return networkResponse;
           }
 
-          // Dynamic resource caching if it belongs to basic web assets, fonts, or CDN images
+          // Cache CSS, JS, Fonts and Images dynamically
           const isCacheable = networkResponse.type === 'basic' || 
+                              url.pathname.match(/\.(js|css|woff2|png|jpg|jpeg|svg|webp)$/) ||
                               url.hostname.includes('unsplash.com') || 
                               url.hostname.includes('googleapis.com') || 
                               url.hostname.includes('gstatic.com');
@@ -93,7 +94,7 @@ self.addEventListener('fetch', (event) => {
         .catch((err) => {
           // Fallback to index.html for navigation requests when offline
           if (event.request.mode === 'navigate') {
-            return caches.match('/');
+            return caches.match('./') || caches.match('index.html');
           }
           throw err;
         });
