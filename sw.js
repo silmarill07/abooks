@@ -1,4 +1,4 @@
-const CACHE_NAME = 'abooks-cache-v5';
+const CACHE_NAME = 'abooks-cache-v6';
 const ASSETS_TO_CACHE = [
   './',
   'index.html',
